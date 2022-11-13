@@ -1,10 +1,17 @@
 import React from "react";
-import { AppRegistry, StyleSheet, Text, View } from "react-native";
+import { AppRegistry, StyleSheet, Text, View, Button } from "react-native";
+import { NativeModules } from "react-native";
 
 const HelloWorld = () => {
+  const { CustomModule } = NativeModules;
+  const onPress = () => {
+    CustomModule.sendMessage("Mihai", "Salut cumetre");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.hello}>Hello, Worldddd</Text>
+      <Button title="Press Me To Call Native Function" onPress={onPress} />
     </View>
   );
 };

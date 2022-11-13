@@ -29,6 +29,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         List<ReactPackage> packages = new PackageList(getApplication()).getPackages();
         // Packages that cannot be autolinked yet can be added manually here, for example:
         // packages.add(new MyReactNativePackage());
+        packages.add(new MyAppPackage());
         // Remember to include them in `settings.gradle` and `app/build.gradle` too.
 
         mReactInstanceManager = ReactInstanceManager.builder()
@@ -46,6 +47,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 
         setContentView(mReactRootView);
     }
+
 
     @Override
     public void invokeDefaultOnBackPressed() {
