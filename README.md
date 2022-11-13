@@ -1,2 +1,3 @@
-# react-native-integration-with-existing-app
-Use React Native into an existing native app
+# Example of native module
+
+I followed [these steps](https://reactnative.dev/docs/native-modules-android).
