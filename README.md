@@ -1,3 +1,4 @@
-# Example of native module
+# Success & Error Module 
 
-I followed [these steps](https://reactnative.dev/docs/native-modules-android).
+Custom module for handle communication between React-Native & Native app.
+
