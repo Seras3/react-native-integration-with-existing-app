@@ -3,15 +3,25 @@ import { AppRegistry, StyleSheet, Text, View, Button } from "react-native";
 import { NativeModules } from "react-native";
 
 const HelloWorld = () => {
-  const { CustomModule } = NativeModules;
-  const onPress = () => {
-    CustomModule.sendMessage("Mihai", "Salut cumetre");
-  };
+  const { SuccessErrorModule } = NativeModules;
 
   return (
     <View style={styles.container}>
       <Text style={styles.hello}>Hello, Worldddd</Text>
-      <Button title="Press Me To Call Native Function" onPress={onPress} />
+      <Button
+        title="Press To Call Success"
+        color="green"
+        onPress={() => {
+          SuccessErrorModule.finish(true);
+        }}
+      />
+      <Button
+        title="Press To Send Error"
+        color="red"
+        onPress={() => {
+          SuccessErrorModule.sendError("Error from React-Native");
+        }}
+      />
     </View>
   );
 };

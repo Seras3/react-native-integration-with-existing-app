@@ -2,103 +2,35 @@ package com.example.clientapp2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
-import com.facebook.react.PackageList;
-import com.facebook.react.ReactInstanceManager;
-import com.facebook.react.ReactPackage;
-import com.facebook.react.ReactRootView;
-import com.facebook.react.common.LifecycleState;
-import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
-import com.facebook.soloader.SoLoader;
-
-import java.util.List;
-
-public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
-    private ReactRootView mReactRootView;
-    private ReactInstanceManager mReactInstanceManager;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button mButton;
+    private GreenPanda mGreenPanda = new GreenPanda();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SoLoader.init(this, false);
+        setContentView(R.layout.activity_main);
 
-        mReactRootView = new ReactRootView(this);
-        List<ReactPackage> packages = new PackageList(getApplication()).getPackages();
-        // Packages that cannot be autolinked yet can be added manually here, for example:
-        // packages.add(new MyReactNativePackage());
-        packages.add(new MyAppPackage());
-        // Remember to include them in `settings.gradle` and `app/build.gradle` too.
-
-        mReactInstanceManager = ReactInstanceManager.builder()
-                .setApplication(getApplication())
-                .setCurrentActivity(this)
-                .setBundleAssetName("index.android.bundle")
-                .setJSMainModulePath("index")
-                .addPackages(packages)
-                .setUseDeveloperSupport(BuildConfig.DEBUG)
-                .setInitialLifecycleState(LifecycleState.RESUMED)
-                .build();
-        // The string here (e.g. "MyReactNativeApp") has to match
-        // the string in AppRegistry.registerComponent() in index.js
-        mReactRootView.startReactApplication(mReactInstanceManager, "CrossPlatformAppV65", null);
-
-        setContentView(mReactRootView);
-    }
-
-
-    @Override
-    public void invokeDefaultOnBackPressed() {
-        super.onBackPressed();
+        mButton = findViewById(R.id.button);
+        mButton.setOnClickListener(this);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onHostPause(this);
+    public void onClick(View view)
+    {
+        switch (view.getId()) {
+            case R.id.button:
+                mGreenPanda.verifyPhone(
+                        this,
+                        () -> Log.d("FromMain", "Finish with Success"),
+                        (message) -> Log.d("FromMain", "Error: " + message)
+                );
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onHostResume(this, this);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onHostDestroy(this);
-        }
-        if (mReactRootView != null) {
-            mReactRootView.unmountReactApplication();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onBackPressed();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_MENU && mReactInstanceManager != null) {
-            mReactInstanceManager.showDevOptionsDialog();
-            return true;
-        }
-        return super.onKeyUp(keyCode, event);
     }
 }
